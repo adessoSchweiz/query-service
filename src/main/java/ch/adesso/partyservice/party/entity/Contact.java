@@ -7,11 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import org.apache.avro.reflect.AvroIgnore;
 import org.apache.avro.reflect.Nullable;
 import org.hibernate.annotations.Any;
 import org.hibernate.annotations.AnyMetaDef;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.MetaValue;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,5 +44,14 @@ public class Contact {
 
 	@Nullable
 	private ContactTypeEnum contactType;
+
+	@JsonIgnore
+	@AvroIgnore
+	@Any(metaColumn = @Column(name = "party_type"), fetch = FetchType.LAZY)
+	@AnyMetaDef(idType = "string", metaType = "string", metaValues = {
+			@MetaValue(value = "P", targetEntity = Person.class),
+			@MetaValue(value = "O", targetEntity = Organization.class) })
+	@JoinColumn(name = "party_id")
+	private Party party;
 
 }

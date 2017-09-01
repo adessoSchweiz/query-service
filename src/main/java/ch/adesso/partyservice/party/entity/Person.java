@@ -80,7 +80,7 @@ public class Person extends Party {
 
 	public void applyEvent(ContactCreatedEvent event) {
 		setVersion(event.getSequence());
-		Contact contact = new Contact(UUID.randomUUID().toString(), event.getAddress(), event.getContactType());
+		Contact contact = new Contact(UUID.randomUUID().toString(), event.getAddress(), event.getContactType(), this);
 		addContact(contact);
 	}
 

@@ -29,13 +29,13 @@ public class RouteRequest {
 	private String passengerId;
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "latitude", column = @Column(name = "FROM_LATITUDE")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "FROM_LONGITUDE")), })
+	@AttributeOverrides({ @AttributeOverride(name = "latitude", column = @Column(name = "from_latitude")),
+			@AttributeOverride(name = "longitude", column = @Column(name = "from_longitude")), })
 	private LatitudeLongitude from;
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "latitude", column = @Column(name = "TO_LATITUDE")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "TO_LONGITUDE")), })
+	@AttributeOverrides({ @AttributeOverride(name = "latitude", column = @Column(name = "to_latitude")),
+			@AttributeOverride(name = "longitude", column = @Column(name = "to_longitude")), })
 	private LatitudeLongitude to;
 
 	private int noOfPersons;

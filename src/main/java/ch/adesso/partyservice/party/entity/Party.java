@@ -36,13 +36,14 @@ public abstract class Party extends AggregateRoot {
 	@AnyMetaDef(idType = "string", metaType = "string", metaValues = {
 			@MetaValue(targetEntity = Passenger.class, value = "P"),
 			@MetaValue(targetEntity = Driver.class, value = "D") })
-	@JoinTable(name = "partyroles", joinColumns = @JoinColumn(name = "party_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "PartyRoleAssigment", joinColumns = @JoinColumn(name = "party_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	@Nullable
 	private List<PartyRole> partyRoles;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
+	@JoinTable(name = "PartyContactAssigment", joinColumns = @JoinColumn(name = "party_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
 	@Nullable
 	private List<Contact> contacts;
 
