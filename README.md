@@ -10,7 +10,7 @@ Two KafkaConsumers listen to Party & Route topics and update relational database
 - run mssql 
 - if not already done, connect with a client to mssql
   jdbc:sqlserver://localhost:1433
-  credentials see in mssql.centos
+  credentials see in mssql-centos
 
   and create Demo database
 
@@ -19,5 +19,6 @@ Two KafkaConsumers listen to Party & Route topics and update relational database
 ## REST
 
 GET  http://host:port/query-service/resources/query/persons
+
 GET  http://host:port/query-service/resources/query/routes
 

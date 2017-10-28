@@ -17,6 +17,8 @@ docker run -d \
   --name query-service \
   --net=hackathon \
   -p 8093:8080 \
+  -e BOOTSTRAP_SERVERS=kafka-1:29092  \
+  -e SCHEMA_REGISTRY_URL=http://schema-registry:8081 \
   -e DB_HOST="172.17.0.1" \
   -e DB_PORT="1433" \
   -e WILDFLY_USER="admin" \
