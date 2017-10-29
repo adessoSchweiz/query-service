@@ -8,7 +8,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 import ch.adesso.teleport.query.contact.entity.Contact;
 import ch.adesso.teleport.query.contact.entity.ContactTypeEnum;
@@ -25,7 +24,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table
 @DiscriminatorValue("P")
 @NamedQueries({ @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p") })
 public class Person extends Party {
@@ -34,8 +32,6 @@ public class Person extends Party {
 	private String lastname;
 	private String birthday;
 	private PersonStatus status;
-	private String mobil;
-	private String email;
 
 	public void addEmailAddress(String email) {
 		if (email == null) {
@@ -55,7 +51,7 @@ public class Person extends Party {
 			ea.setElectronicType(ElectronicAddressTypeEnum.EMAIL);
 			ea.setValue(email);
 
-			Contact c = new Contact(UUID.randomUUID().toString(), this);
+			Contact c = new Contact(UUID.randomUUID().toString());
 			c.setContactType(ContactTypeEnum.CORRESPONDENCE);
 			c.setAddress(ea);
 
@@ -81,7 +77,7 @@ public class Person extends Party {
 			ea.setElectronicType(ElectronicAddressTypeEnum.TELEFON);
 			ea.setValue(mobil);
 
-			Contact c = new Contact(UUID.randomUUID().toString(), this);
+			Contact c = new Contact(UUID.randomUUID().toString());
 			c.setContactType(ContactTypeEnum.CORRESPONDENCE);
 			c.setAddress(ea);
 

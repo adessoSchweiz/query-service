@@ -4,8 +4,6 @@ import static java.util.concurrent.CompletableFuture.runAsync;
 
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -22,15 +20,20 @@ import com.airhacks.porcupine.execution.boundary.Dedicated;
 import ch.adesso.kafka.KafkaConfiguration;
 import ch.adesso.kafka.KafkaConsumerRunner;
 import ch.adesso.teleport.query.route.controller.RouteEventEnvelopeAvroDeserializer;
+import ch.adesso.teleport.query.route.entity.CarTypeEnum;
+import ch.adesso.teleport.query.route.entity.Route;
+import ch.adesso.teleport.query.route.entity.RouteStatus;
 import ch.adesso.teleport.query.route.event.RouteCreatedEvent;
 import ch.adesso.teleport.query.route.event.RouteEvent;
 import ch.adesso.teleport.query.route.event.RouteEventEnvelope;
+import ch.adesso.teleport.query.route.event.RouteStatusChangedEvent;
 
 @Startup
 @Singleton
 public class RouteEventHandler {
 
-	private static final Logger LOG = Logger.getLogger(RouteEventHandler.class.getName());
+	@Inject
+	RouteService routeService;
 
 	@Inject
 	Event<RouteEvent> routeEvents;
@@ -56,7 +59,22 @@ public class RouteEventHandler {
 	}
 
 	public void on(@Observes RouteCreatedEvent event) {
-		LOG.log(Level.INFO, "Got Event: " + event);
+		Route route = new Route();
+		route.setCarType(event.getCarType() != null ? CarTypeEnum.valueOf(event.getCarType()) : null);
+		route.setPassengerId(event.getPassengerId());
+		route.setPassengerComment(event.getPassengerComment());
+		route.setId(event.getAggregateId());
+		route.setVersion(event.getSequence());
+		route.setFrom(event.getFrom());
+		route.setTo(event.getTo());
+		route.setNoOfPersons(event.getNoOfPersons());
+		route.setEstimatedDistance(event.getEstimatedDistance());
+		route.setEstimatedTime(event.getEstimatedTime());
+
+		routeService.createRoute(route);
 	}
 
+	public void on(@Observes RouteStatusChangedEvent event) {
+		routeService.updateStatus(event.getAggregateId(), event.getSequence(), RouteStatus.valueOf(event.getStatus()));
+	}
 }

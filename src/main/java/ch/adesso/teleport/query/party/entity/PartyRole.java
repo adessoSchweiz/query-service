@@ -7,6 +7,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public abstract class PartyRole {
 	@Id
 	private String id;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Party party;
 

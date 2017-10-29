@@ -3,11 +3,13 @@ package ch.adesso.teleport.query.party.entity;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import avro.shaded.com.google.common.collect.Sets;
@@ -20,18 +22,21 @@ import lombok.ToString;
 @ToString(exclude = { "contacts", "partyRoles" })
 @EqualsAndHashCode(exclude = { "contacts", "partyRoles" })
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Party {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "party_type")
+public class Party {
 
 	@Id
 	private String id;
 
 	private long version = 0;
 
-	@OneToMany(mappedBy = "party", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "party_id")
 	private Set<PartyRole> partyRoles;
 
-	@OneToMany(mappedBy = "party", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "party_id")
 	private Set<Contact> contacts;
 
 	public Party() {

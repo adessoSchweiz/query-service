@@ -40,7 +40,7 @@ public class KafkaConsumerRunner<T> implements Runnable {
 			while (!closed.get()) {
 				ConsumerRecords<String, T> records = consumer.poll(10000);
 				records.forEach(record -> eventConsumer.accept(record.value()));
-				consumer.commitAsync();
+				consumer.commitSync();
 			}
 		} catch (WakeupException e) {
 			// Ignore exception if closing

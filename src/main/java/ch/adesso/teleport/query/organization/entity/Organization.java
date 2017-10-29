@@ -1,12 +1,12 @@
 package ch.adesso.teleport.query.organization.entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import ch.adesso.teleport.query.party.entity.Party;
 
 @Entity
-@Table
+@DiscriminatorValue("O")
 public class Organization extends Party {
 
 }

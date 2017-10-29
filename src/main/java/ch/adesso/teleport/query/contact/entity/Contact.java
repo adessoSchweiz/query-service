@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ch.adesso.teleport.query.party.entity.Party;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,12 +30,8 @@ public class Contact {
 
 	private ContactTypeEnum contactType;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Party party;
-
-	public Contact(String id, Party party) {
+	public Contact(String id) {
 		this.id = id;
-		this.party = party;
 	}
 
 }

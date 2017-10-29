@@ -36,7 +36,7 @@ public class Route {
 			@AttributeOverride(name = "longitude", column = @Column(name = "to_longitude")), })
 	private LatitudeLongitude to;
 	private int noOfPersons;
-	private CarType carType;
+	private CarTypeEnum carType;
 	private String passengerComment;
 	private String estimatedTime;
 	private String estimatedDistance;

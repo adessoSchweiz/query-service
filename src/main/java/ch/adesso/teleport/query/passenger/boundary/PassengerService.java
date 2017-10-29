@@ -46,16 +46,17 @@ public class PassengerService {
 		em.merge(p);
 	}
 
+	// person is in another topic, so we wait or data
 	private Person getPerson(String personId) {
 		Person p = em.find(Person.class, personId);
 
 		while (p == null) {
-			p = em.find(Person.class, personId);
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				//
 			}
+			p = em.find(Person.class, personId);
 		}
 
 		return p;
