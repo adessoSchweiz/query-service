@@ -1,37 +1,21 @@
 package ch.adesso.teleport.query.party.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(exclude = { "party" })
-@ToString(exclude = { "party" })
+@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class PartyRole {
+@ToString
 
+@MappedSuperclass
+public class PartyRole {
 	@Id
 	private String id;
-
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Party party;
-
-	public PartyRole(String id, Party party) {
-		this.id = id;
-		this.party = party;
-	}
 
 }

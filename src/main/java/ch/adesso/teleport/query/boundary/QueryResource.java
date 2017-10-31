@@ -1,5 +1,7 @@
 package ch.adesso.teleport.query.boundary;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,13 +25,14 @@ public class QueryResource {
 
 	@GET
 	@Path("/persons")
-	public Person[] getAllPersons() {
+	public List<Person> getAllPersons() {
 		return queryService.getPersons();
+
 	}
 
 	@GET
 	@Path("/routes")
-	public Route[] getAllRouteRequests() {
+	public List<Route> getAllRouteRequests() {
 		return queryService.getRouteRequests();
 	}
 

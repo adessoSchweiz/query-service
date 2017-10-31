@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import avro.shaded.com.google.common.collect.Lists;
+import ch.adesso.teleport.query.passenger.entity.Passenger;
 import ch.adesso.teleport.query.person.entity.Person;
 import ch.adesso.teleport.query.route.entity.Route;
 
@@ -16,18 +16,20 @@ public class QueryService {
 	@PersistenceContext
 	EntityManager em;
 
-	public Person[] getPersons() {
-		List<Person> persons = em.createNamedQuery("findAllPersons", Person.class).getResultList();
+	public List<Person> getPersons() {
+		List<Person> persons = em.createNamedQuery("Person.findAllPersons", Person.class).getResultList();
 
-		persons.forEach(p -> p.getPartyRoles());
-		return persons.toArray(new Person[persons.size()]);
+		persons.forEach(p -> {
+			Passenger passenger = (Passenger) em.createNamedQuery("Passenger.findPassengerByPartyId")
+					.setParameter("partyId", p.getId()).getSingleResult();
+			p.addPartyRole(passenger);
+		});
+		return persons;
 
 	}
 
-	public Route[] getRouteRequests() {
-		List<Route> routeRequests = Lists.newArrayList();
-
-		return routeRequests.toArray(new Route[routeRequests.size()]);
+	public List<Route> getRouteRequests() {
+		return em.createNamedQuery("Route.findAllRoutes", Route.class).getResultList();
 
 	}
 

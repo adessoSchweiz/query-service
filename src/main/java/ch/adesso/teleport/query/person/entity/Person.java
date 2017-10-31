@@ -25,7 +25,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue("P")
-@NamedQueries({ @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p") })
+@NamedQueries({ @NamedQuery(name = "Person.findAllPersons", query = "SELECT p FROM Person p") })
 public class Person extends Party {
 
 	private String firstname;

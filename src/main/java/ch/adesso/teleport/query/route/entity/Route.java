@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table
-@NamedQueries({ @NamedQuery(name = "findAllRoutes", query = "SELECT r FROM Route r") })
+@NamedQueries({ @NamedQuery(name = "Route.findAllRoutes", query = "SELECT r FROM Route r") })
 public class Route {
 
 	@Id
@@ -25,6 +25,8 @@ public class Route {
 	private long version = 0;
 
 	private String passengerId;
+
+	private String driverId;
 
 	@Embedded
 	@AttributeOverrides({ @AttributeOverride(name = "latitude", column = @Column(name = "from_latitude")),

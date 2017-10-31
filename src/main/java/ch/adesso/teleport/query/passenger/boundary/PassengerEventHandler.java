@@ -65,7 +65,7 @@ public class PassengerEventHandler {
 	}
 
 	public void on(@Observes PassengerCreatedEvent event) {
-		passengerService.createPassenger(event.getAggregateId());
+		passengerService.createPassenger(event.getAggregateId(), event.getSequence());
 	}
 
 	public void on(@Observes CreditCardCreatedEvent event) {

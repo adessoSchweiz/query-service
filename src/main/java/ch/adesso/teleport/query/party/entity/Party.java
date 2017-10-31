@@ -11,6 +11,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import avro.shaded.com.google.common.collect.Sets;
 import ch.adesso.teleport.query.contact.entity.Contact;
@@ -31,8 +32,7 @@ public class Party {
 
 	private long version = 0;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "party_id")
+	@Transient
 	private Set<PartyRole> partyRoles;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
