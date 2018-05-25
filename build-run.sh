@@ -29,6 +29,3 @@ docker run -d \
   -e DATABASE_USER="sa" \
   -e DATABASE_PASSWORD="adesso@OpenShift" \
  adesso/query-service:${VERSION}
-
-
-docker logs -f query-service
